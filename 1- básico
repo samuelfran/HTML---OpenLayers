@@ -1,0 +1,21 @@
+<html>
+<head>
+	<script src="http://www.openlayers.org/api/OpenLayers.js">
+	</script>                                                             <!--aqui referencia o OpenLayers-->
+	
+	<script type="text/javascript">
+		var map;                                                            <!--cria variavel mapa-->
+		function init() {                                                   <!--inicia funcao-->
+		map = new OpenLayers.Map('map');
+		
+		var osm = new OpenLayers.Layer.OSM("Blue Marbie");                  <!--cria variavel osm que recebe layer OSM de nome "Blue marbie-->
+		
+		map.addLayers([osm]);                                               <!--add varial osm, dentro da varial map, com seus layers -->
+		map.zoomToMaxExtent();                                              <!--chama funcao do OpenLayers para variavel map -->
+		}
+	</script>
+</head>
+<body onload="init()">
+	<div id="map" style= "width; 600px; height; 300px"></div>
+</body>
+</html>
