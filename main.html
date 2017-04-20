@@ -1,0 +1,44 @@
+<html>
+<head>
+  <title>OpenLayers 2 Example</title>
+    <script src="http://openlayers.org/api/OpenLayers.js"></script>
+	<script type="text/javascript" src="glueMap.js"></script>
+	<script type="text/javascript" src="samuDesenha.js"></script>
+	
+	<style>
+	nav {
+		float: left;
+		max-width: 840px;
+		margin: 0;
+		padding: 1em;
+	}
+
+	article {
+		margin-left: 170px;
+		border-left: 1px solid gray;
+		padding: 1em;
+		overflow: hidden;
+	}
+	</style>
+  
+    </head>
+    <body>
+      <nav oncontextmenu='return false' ondragstart='return false'><div id="map"  style="width: 850px; height: 500px;"></div></nav>
+	  <script defer="defer" type="text/javascript" >
+		var map= new glueMap('map');
+	  </script>
+		<br>
+		<article>
+			
+      <ul id="controlToggle">
+		
+				<li>				
+					<input type="radio" name="type" value="teste" id="teste" onclick="samu1.desenha(this)";>Linha do samu<br>
+				</li>
+				<li>
+					<input type="radio" name="type" value="none" id="none" onclick="";> None<br>
+				</li>
+			</ul>
+		</article>	
+	</body>
+</html>
