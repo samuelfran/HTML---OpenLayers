@@ -21,7 +21,7 @@ var qualquerNome = (function()
 						   //editor.onLeftClick(this.events.getMousePosition(e));
 							var position = this.events.getMousePosition(e);                                                     //detecta posição do mouse 
 							var lonlat = map.getLonLatFromPixel(position);                                                      //pega latitude e longitude dos pixels em relacao ao mouse
-							if(lonlat!=undefined || lonlat!=null){                                                              //verifica se a variavell lollat esta nula ou indefinida
+							if(lonlat!=undefined || lonlat!=null){                                                              //verifica se a variavell lonlat esta nula ou indefinida
 								var point = new OpenLayers.Geometry.Point(lonlat.lon,lonlat.lat);                               //define variavel ponto que recebe uma geometria ponto com lat e long do OpenLayers 
 								samu1.addPointLine(point);                                                                      //a funcao addPointLine recebe a variavel ponto
 							}
@@ -29,7 +29,7 @@ var qualquerNome = (function()
 						break;
 					case 2:
 						//editor.onRightClick(e);
-						alert("botao esquerdo");
+						samu1.save();
 						break;
 					default:
 						break;
@@ -41,11 +41,18 @@ var qualquerNome = (function()
 			},
 //-----------------------------------VARIAVEIS-----------------------
 			editingLayer : new OpenLayers.Layer.Vector('Glue EditingLayer',{ styleMap: new OpenLayers.StyleMap({'default':{
-                  'strokeWidth': 2,// espessura da linha ou borda
-				  'strokeColor': '#C1FFC1',// cor das bordas ou linha
-				  'fillOpacity' : 0.4,//opacidade da cor de fundo
-				  'fillColor': "#C1FFC1",//cor de fundo
-				   'pointRadius': 7//caso editing Layer for um ponto, tem que ter esse campo, para tratalo de forma correta
+                  'strokeWidth': 2,                                                                                              //espessura da linha ou borda
+				  'strokeColor': '#d5e861',                                                                                      //cor das bordas ou linha
+				  'fillOpacity' : 0.4,                                                                                           //opacidade da cor de fundo
+				  'fillColor': "#d5e861",                                                                                        //cor de fundo
+				  'pointRadius': 7                                                                                               //caso editing Layer for um ponto, tem que ter esse campo, para tratalo de forma correta
+                }})}),
+			savedLayer : new OpenLayers.Layer.Vector('Glue EditingLayer',{ styleMap: new OpenLayers.StyleMap({'default':{
+                  'strokeWidth': 2,                                                                                              //espessura da linha ou borda
+				  'strokeColor': '#1bf760',                                                                                  //cor das bordas ou linha
+				  'fillOpacity' : 0.4,                                                                                           //opacidade da cor de fundo
+				  'fillColor': "#1bf760",                                                                                        //cor de fundo
+				  'pointRadius': 7                                                                                               //caso editing Layer for um ponto, tem que ter esse campo, para tratalo de forma correta
                 }})}),
 				
 				line: new OpenLayers.Geometry.LineString([]),
@@ -58,9 +65,9 @@ var qualquerNome = (function()
 			addPointLine : function(positionMouse){
 				samu1.line.components[samu1.line.components.length]=positionMouse;  //add um ponto novo dentro do line 
 				
-				var f = new OpenLayers.Feature.Vector(samu1.line);  // cria variavel feature e add a limha 
-				samu1.editingLayer.addFeatures([f]);   //add a feature dentro do layer 
-				map.addLayers([samu1.editingLayer]);   //add o layer no mapa
+				var f = new OpenLayers.Feature.Vector(samu1.line);                  // cria variavel feature e add a limha 
+				samu1.editingLayer.addFeatures([f]);                                //add a feature dentro do layer 
+				map.addLayers([samu1.editingLayer]);                                //add o layer no mapa
 				
 				//samu1.line.components[samu1.line.components.length]=positionMouse;
 			},
@@ -73,6 +80,16 @@ var qualquerNome = (function()
 				samu1.editingLayer.addFeatures([f]);
 				map.addLayers([samu1.editingLayer]);
 				}
+			},
+			
+			save : function (){
+				var f = new OpenLayers.Feature.Vector(samu1.line);
+				samu1.savedLayer.addFeatures([f]);
+				map.addLayer(samu1.savedLayer);
+				samu1.line = new OpenLayers.Geometry.LineString([]);
+				var f2 =new OpenLayers.Feature.Vector(samu1.line)
+				samu1.editingLayer.addFeatures([f2]);
+				map.addLayer(samu1.editingLayer);
 			}
 			
 			};
