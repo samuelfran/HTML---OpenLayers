@@ -3,15 +3,18 @@
   <title>OpenLayers 2 Example</title>
     <script src="http://openlayers.org/api/OpenLayers.js"></script>
 	<script type="text/javascript" src="glueMap.js"></script>
+	<!--<script type="text/javascript" src="Editor.js"></script>-->
 	<script type="text/javascript" src="samuDesenha.js"></script>
 	
 	<style>
+
 	nav {
 		float: left;
 		max-width: 840px;
 		margin: 0;
 		padding: 1em;
 	}
+
 
 	article {
 		margin-left: 170px;
@@ -20,23 +23,70 @@
 		overflow: hidden;
 	}
 	</style>
-  
     </head>
-    <body>
+    <body ><!--vai bloquear o box do botao direito do mouse -->
       <nav oncontextmenu='return false' ondragstart='return false'><div id="map"  style="width: 850px; height: 500px;"></div></nav>
 	  <script defer="defer" type="text/javascript" >
 		var map= new glueMap('map');
 	  </script>
 		<br>
 		<article>
-			
-      <ul id="controlToggle">
-		
-				<li>				
-					<input type="radio" name="type" value="teste" id="teste" onclick="samu1.desenha(this)";>Linha do samu<br>
+		<!--	<div><input type="checkbox" id="myCheck" onclick="checkBox()" checked=true>Snap</div> 
+			<ul><div>
+					<li>Tolerance Snaped: <input type="number" id="myNumber" value="10" onchange="editor.setTolerance(this)" style="width: 50px;" min="1" max="100" value="0"></li>
+					<li>Distance: <input type="text" id="myText" value="" onclick="editor.deletTextField()" maxlength="5" size="5"></li>
+			<div></ul>-->
+			<ul id="controlToggle">
+				<!--<li>
+					<input type="radio" name="type" value="point" id="pointToggle" onclick="editor.selectForm(this);" />
+					<label for="pointToggle">Draw Point</label>
 				</li>
 				<li>
-					<input type="radio" name="type" value="none" id="none" onclick="";> None<br>
+					<input type="radio" name="type" value="line" id="lineToggle" onclick="editor.selectForm(this);" />
+					<label for="lineToggle">Draw Line</label>
+				</li>
+				<li>
+					<input type="radio" name="type" value="polygon" id="polygonToggle" onclick="editor.selectForm(this);" />
+					<label for="polygonToggle">Draw Polygon</label>
+				</li> -->
+			<!--	<li>
+					<input type="radio" name="type" value="lineFree" id="freeLineToggle" onclick="editor.selectForm(this);" />
+					<label for="freeLine">Free Draw</label>
+				</li> -->
+				
+				<!--<li>
+					<input type="radio" name="type" value="curveFree" id="bazieFreeToggle" onclick="editor.selectForm(this);" />
+					<label for="bazieFreeToggle">Draw Bezie Curve</label>
+				</li>
+				<li>				
+					<input type="radio" name="type" value="moveEdge" id="modificarToggle" onclick="editor.selectForm(this)";> Modificar Feature<br>
+				</li>
+				<li>				
+					<input type="radio" name="type" value="offset" id="fazerBairalToggle" onclick="editor.selectForm(this)";> Faz Beiral<br>
+				</li>
+				
+				<li>				
+					<input type="radio" name="type" value="delete" id="deleteToggle" onclick="editor.selectForm(this)";> Delete Geometry<br>
+				</li>
+				<li>				
+					<input type="radio" name="type" value="removeVertex" id="removeVertexToggle" onclick="editor.selectForm(this)";>Remove vertex<br>
+				</li>
+				<li>				
+					<input type="radio" name="type" value="insertVertex" id="insertVertexToggle" onclick="editor.selectForm(this)";>Insert Vertex<br>
+				</li>
+				<li>				
+					<input type="radio" name="type" value="duplicateGeometry" id="duplicateGeometryToggle" onclick="editor.selectForm(this)";>Duplicate Geometry<br>
+				</li>
+				-->
+				<li>				
+					<input type="radio" name="type" value="point" id="teste" onclick="samu1.selectForm(this)";>Ponto<br>
+				</li>
+				
+				<li>				
+					<input type="radio" name="type" value="line" id="teste" onclick="samu1.selectForm(this)";>Linha<br>
+				</li>
+				<li>
+					<input type="radio" name="type" value="none" id="teste" onclick="samu1.selectForm(this)";> None<br>
 				</li>
 			</ul>
 		</article>	
