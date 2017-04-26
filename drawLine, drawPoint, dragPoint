@@ -1,0 +1,77 @@
+samuDrawLine : function(point){
+				editor.editingLine.components[editor.editingLine.components.length]=point;
+				var snap = editor.snap(point);
+				var tem=false;
+				if(editor.savedLayer.features.length==0){                                //1ºvez
+					editor.drawPoint(point); 
+				}else{
+					for(var x=0;x<editor.savedLayer.features.length;x++){
+						if( editor.savedLayer.features[x].geometry.CLASS_NAME==="OpenLayers.Geometry.Point"){
+							if(Math.round(editor.savedLayer.features[x].geometry.x) == Math.round(snap.point.x) && Math.round(editor.savedLayer.features[x].geometry.y)==Math.round(snap.point.y)){
+								tem=true;
+								break
+							}
+							
+						}
+					}
+					if(tem==false){
+						editor.drawPoint(point);
+					}
+					
+				}						
+				var f = new OpenLayers.Feature.Vector(editor.editingLine);          		    //cria variavel feature e add uma limha
+				editor.editingLayer.addFeatures([f]);                                       //add feature in layer
+				map.addLayers([editor.editingLayer]);                                       //add layer in map
+				
+			},
+			
+			drawPoint : function(point){
+				editor.editingPoint=point;
+				editor.show(editor.editingLayer,editor.editingPoint);
+				//editor.savedLayer.addFeatures(editor.editingLayer);
+				editor.savedLayer.addFeatures(new OpenLayers.Feature.Vector(editor.editingPoint))
+				map.addLayers([editor.savedLayer]);
+			},
+			
+			
+			arrasta : function(point){
+				for(var f=1;f < editor.savedLayer.features.length;f++){//percorre todas as figuras
+					
+					var geom=editor.savedLayer.features[f]; //geom ganha um por um
+					
+					if(geom.geometry.CLASS_NAME!="OpenLayers.Geometry.Point"){
+						
+						for(var a=0; a< editor.savedLayer.features[f].geometry.components.length; a++){
+						
+							var snap=editor.snap(point);
+						
+							if(snap.type!="NONE"){
+								if(Math.round(geom.geometry.components[a].x)==Math.round(snap.point.x) && Math.round(geom.geometry.components[a].y)==Math.round(snap.point.y)){
+									geom.geometry.components[a]=point;
+									editor.savedLayer.drawFeature(editor.savedLayer.features[f]);
+								}
+							}
+						}
+					
+					}else{
+						
+						var snap=editor.snap(point);
+						
+						if(snap.type!="NONE"){
+							if(Math.round(geom.geometry.x)==Math.round(snap.point.x)){
+								geom.geometry.components=point;
+								editor.savedLayer.destroyFeatures(geom);
+								//snap = null;
+								editor.savedLayer.addFeatures(new OpenLayers.Feature.Vector(point));
+							}
+						}
+					}
+
+				}
+			}
+		
+		};
+		return Edit;
+	})();
+	
+var editor= new Edit();
