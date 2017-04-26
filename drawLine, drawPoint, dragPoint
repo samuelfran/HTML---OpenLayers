@@ -61,7 +61,6 @@ samuDrawLine : function(point){
 							if(Math.round(geom.geometry.x)==Math.round(snap.point.x)){
 								geom.geometry.components=point;
 								editor.savedLayer.destroyFeatures(geom);
-								//snap = null;
 								editor.savedLayer.addFeatures(new OpenLayers.Feature.Vector(point));
 							}
 						}
