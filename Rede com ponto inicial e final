@@ -1,0 +1,33 @@
+rede : function(point){
+
+				editor.editingLine.components[editor.editingLine.components.length]=point;
+				var snap = editor.snap(point);
+				var tem=false;
+				line = new OpenLayers.Geometry.LineString();
+				if(editor.savedLayer.features.length==0 || editor.editingLine.components.length==1){                                //1ºvez
+					editor.drawPoint(point); 
+				}else{
+					for(var k=0;k<editor.savedLayer.features.length;k++){
+						if( editor.savedLayer.features[k].geometry.CLASS_NAME==="OpenLayers.Geometry.Point"){
+							if(Math.round(editor.savedLayer.features[k].geometry.x) == Math.round(snap.point.x) && Math.round(editor.savedLayer.features[k].geometry.y)==Math.round(snap.point.y)){
+								tem=true;
+								break
+							}
+							
+						}
+					}
+					
+				}						
+				var f = new OpenLayers.Feature.Vector(editor.editingLine);          		//cria variavel feature e add uma limha
+				editor.editingLayer.addFeatures([f]);                                       //add feature in layer
+				map.addLayers([editor.editingLayer]);                                       //add layer in map
+				
+			},
+			
+			colocaPonto : function(point){
+				editor.editingPoint=point;
+				pointUltimo=editor.editingLine.components[editor.editingLine.components.length -2];
+				editor.drawPoint(pointUltimo);
+			}
+      
+      
