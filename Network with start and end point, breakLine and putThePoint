@@ -64,7 +64,9 @@
 							array.push(snap.point);
 							if(editor.editingLine.components.length==1 || editor.editingLine.components.length-1){
 							break	
-							}else{
+							}
+							//if()
+							else{
 								editor.drawPoint(snap.point);
 							}
 							} 
