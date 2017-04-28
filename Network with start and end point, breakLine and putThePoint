@@ -52,35 +52,43 @@
 			*/
 			breakLine : function(snap){
 				if(snap.point!= undefined || snap.point!= null){
-				if(editor.editingLine.components!=snap.geom.components){
-				var tolerance=3;
-				var tem = false;
-				if((Math.round(editor.editingLine.components[editor.editingLine.components.length-1].x)-Math.round(snap.point.x)<tolerance) && (Math.round(editor.editingLine.components[editor.editingLine.components.length-1].y)-Math.round(snap.point.y))<tolerance){
-					var geomTemp=snap.geom;
-					var array=[];
-					for(var x=0;x<geomTemp.components.length;x++){
-						if(snap.segment=== x){
-							array.push(geomTemp.components[x]);
-							array.push(snap.point);
-							if(editor.editingLine.components.length==1 || editor.editingLine.components.length-1){
-							break	
-							}
-							//if()
-							else{
-								editor.drawPoint(snap.point);
-							}
-							} 
+					if(editor.editingLine.components!=snap.geom.components){
+					var tolerance=3;
+					var tem = false;
+						if((Math.round(editor.editingLine.components[editor.editingLine.components.length-1].x)-Math.round(snap.point.x)<tolerance) && (Math.round(editor.editingLine.components[editor.editingLine.components.length-1].y)-Math.round(snap.point.y))<tolerance){
+						var geomTemp=snap.geom;
+						var array=[];
+							for(var x=0;x<geomTemp.components.length;x++){
+								if(snap.segment=== x){
+									array.push(geomTemp.components[x]);
+									array.push(snap.point);
+									for(var k=0;k<editor.savedLayer.features.length;k++){
+										if( editor.savedLayer.features[k].geometry.CLASS_NAME==="OpenLayers.Geometry.Point"){
+											if(Math.round(editor.savedLayer.features[k].geometry.x) == Math.round(snap.point.x) && Math.round(editor.savedLayer.features[k].geometry.y)==Math.round(snap.point.y)){
+												tem=true;
+												break
+											}
+										}
+										
+										else{
+											tem = false;
+										}
+									}
+									if(tem==false){
+									editor.drawPoint(snap.point);
+									}
+								} 
 							
-						else{
-							array.push(geomTemp.components[x]);
+								else{
+								array.push(geomTemp.components[x]);
+								}
+							}
+							for(var x=0;x<editor.savedLayer.features.length;x++){
+								if(editor.savedLayer.features[x].components===snap.geom.components){
+									editor.savedLayer.features[x].components=array;
+								}
+							}
 						}
 					}
-					for(var x=0;x<editor.savedLayer.features.length;x++){
-						if(editor.savedLayer.features[x].components===snap.geom.components){
-							editor.savedLayer.features[x].components=array;
-						}
-					}
 				}
-				}
-				}
-		},
+			},
