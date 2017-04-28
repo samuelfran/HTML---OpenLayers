@@ -1,5 +1,8 @@
-rede : function(point){
-
+	/**
+			*	Network with nodes at the beginning and end
+			*	@param point
+			*/
+			rede : function(point){
 				editor.editingLine.components[editor.editingLine.components.length]=point;
 				var snap = editor.snap(point);
 				var tem=false;
@@ -9,6 +12,7 @@ rede : function(point){
 				}else{
 					for(var k=0;k<editor.savedLayer.features.length;k++){
 						if( editor.savedLayer.features[k].geometry.CLASS_NAME==="OpenLayers.Geometry.Point"){
+
 							if(Math.round(editor.savedLayer.features[k].geometry.x) == Math.round(snap.point.x) && Math.round(editor.savedLayer.features[k].geometry.y)==Math.round(snap.point.y)){
 								tem=true;
 								break
@@ -17,17 +21,50 @@ rede : function(point){
 						}
 					}
 					
-				}						
-				var f = new OpenLayers.Feature.Vector(editor.editingLine);          		//cria variavel feature e add uma limha
+				}
+				
+				editor.breakLine(snap);														//chama função breakLine
+				var f = new OpenLayers.Feature.Vector(editor.editingLine);         		    //cria variavel feature e add uma limha
 				editor.editingLayer.addFeatures([f]);                                       //add feature in layer
 				map.addLayers([editor.editingLayer]);                                       //add layer in map
-				
 			},
 			
-			colocaPonto : function(point){
-				editor.editingPoint=point;
-				pointUltimo=editor.editingLine.components[editor.editingLine.components.length -2];
-				editor.drawPoint(pointUltimo);
-			}
-      
-      
+			
+			/**
+			*	Put the mouse in the last position of the line
+			*	@param point
+			*/
+			putThePoint : function(point){
+				lastPoint=editor.editingLine.components[editor.editingLine.components.length -2];
+				editor.drawPoint(lastPoint);
+			},
+			
+			/**
+			*	Put a point on the intersection of lines 
+			*	@param snap
+			*/
+			breakLine : function(snap){
+				if(snap.point!= undefined || snap.point!= null){
+				//if(editor.editingLine.components!=snap.geom.components){
+				var tolerance=3;
+				if((Math.round(editor.editingLine.components[editor.editingLine.components.length-1].x)-Math.round(snap.point.x)<tolerance) && (Math.round(editor.editingLine.components[editor.editingLine.components.length-1].y)-Math.round(snap.point.y))<tolerance){
+					var geomTemp=snap.geom;
+					var array=[];
+					for(var x=0;x<geomTemp.components.length;x++){
+						if(snap.segment=== x){
+							array.push(geomTemp.components[x]);
+							array.push(snap.point);
+							editor.drawPoint(snap.point); 
+						}else{
+							array.push(geomTemp.components[x]);
+						}
+					}
+					for(var x=0;x<editor.savedLayer.features.length;x++){
+						if(editor.savedLayer.features[x].components===snap.geom.components){
+							editor.savedLayer.features[x].components=array;
+						}
+					}
+				}
+				//}
+				}
+		},
