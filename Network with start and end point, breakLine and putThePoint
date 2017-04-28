@@ -1,4 +1,5 @@
-	                /**
+	                _________________________________Network_________________________________________
+			/**
 			*	Network with nodes at the beginning and end
 			*	@param point
 			*/
@@ -30,6 +31,9 @@
 			},
 			
 			
+			
+			
+			_________________________________putThePoint_________________________________________
 			/**
 			*	Put the mouse in the last position of the line
 			*	@param point
@@ -39,6 +43,9 @@
 				editor.drawPoint(lastPoint);
 			},
 			
+			
+			
+			_________________________________breakLine____________________________________________
 			/**
 			*	Put a point on the intersection of lines 
 			*	@param snap
